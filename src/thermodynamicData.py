@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.interpolate import interp1d
+import scipy as sp
 
 #=====================================================================
 class ThermodynamicData:
@@ -464,7 +464,7 @@ class ThermodynamicData:
     #-------------------------------------------------------------------------
     
     def interpolation_lineaire(self, x, y, x0):
-        f = interp1d(x, y, kind='linear')
+        f = sp.interpolate.interp1d(x, y, kind='linear')
         return f(x0)
     
     def calculate(self,T):
@@ -536,6 +536,15 @@ class ThermodynamicData:
         self.deltaG0_7 = self.deltah7 - T * self.deltas7
         self.deltaG0_8 = self.deltah8 - T * self.deltas8
         self.deltaG0_9 = self.deltah9 - T * self.deltas9
+
+        self.deltaG0_h2  = 1000*self.deltah_h2   - T * self.s0_h2
+        self.deltaG0_h2o = 1000*self.deltah_h2o  - T * self.s0_h2o
+        self.deltaG0_o   = 1000*self.deltah_o    - T * self.s0_o
+        self.deltaG0_co  = 1000*self.deltah_co   - T * self.s0_co
+        self.deltaG0_co2 = 1000*self.deltah_co2  - T * self.s0_co2
+        self.deltaG0_ch4 = 1000*self.deltah_ch4  - T * self.s0_ch4
+        self.deltaG0_n2  = 1000*self.deltah_n2   - T * self.s0_n2
+        self.deltaG0_nh3 = 1000*self.deltah_nh3  - T * self.s0_nh3
       
         
     def print(self):
@@ -602,30 +611,31 @@ class ThermodynamicData:
             file.write(f"{self.deltaG0_5:10.2f}\t{self.deltaG0_6:10.2f}\t{self.deltaG0_7:10.2f}\t{self.deltaG0_8:10.3f}\t{self.deltaG0_9:10.2f}\n")
         file.write("END\n")
 
-        
-def interpolation_lineaire(x, y, x0):
-    """
-    Interpolation linéaire pour trouver la valeur y0 correspondante à x0.
-    
-    Args:
-        x (list): Liste des valeurs x connues.
-        y (list): Liste des valeurs y connues.
-        x0 (float): Valeur x pour laquelle on veut interpoler y.
-        
-    Returns:
-        float: Valeur y0 interpolée.
-    """
-    f = interp1d(x, y, kind='linear')
-    return f(x0)
+    def printJANAFData (self, t):
+        self.calculate(t)
+        print (f"H2   deltaH0 {self.deltah_h2:10.3f} kJ/mol S0 {self.s0_h2:10.3f} J/K/mol deltaG0 {self.deltaG0_h2/1000:10.3f} kJ/mol")
+        print (f"H2O  deltaH0 {self.deltah_h2o:10.3f} kJ/mol S0 {self.s0_h2o:10.3f} J/K/mol deltaG0 {self.deltaG0_h2o/1000:10.3f} kJ/mol")
+        print (f"O    deltaH0 {self.deltah_o:10.3f} kJ/mol S0 {self.s0_o:10.3f} J/K/mol deltaG0 {self.deltaG0_o/1000:10.3f} kJ/mol")
+        print (f"CO   deltaH0 {self.deltah_co:10.3f} kJ/mol S0 {self.s0_co:10.3f} J/K/mol deltaG0 {self.deltaG0_co/1000:10.3f} kJ/mol")
+        print (f"CO2  deltaH0 {self.deltah_co2:10.3f} kJ/mol S0 {self.s0_co2:10.3f} J/K/mol deltaG0 {self.deltaG0_co2/1000:10.3f} kJ/mol")
+        print (f"CH4  deltaH0 {self.deltah_ch4:10.3f} kJ/mol S0 {self.s0_ch4:10.3f} J/K/mol deltaG0 {self.deltaG0_ch4/1000:10.3f} kJ/mol")
+        print (f"N2   deltaH0 {self.deltah_n2:10.3f} kJ/mol S0 {self.s0_n2:10.3f} J/K/mol deltaG0 {self.deltaG0_n2/1000:10.3f} kJ/mol")
+        print (f"NH3  deltaH0 {self.deltah_nh3:10.3f} kJ/mol S0 {self.s0_nh3:10.3f} J/K/mol deltaG0 {self.deltaG0_nh3/1000:10.3f} kJ/mol")
 
-def printJANAFData (self, t):
-    self.calculate(t)
-    print (f"H2   deltaH0 {delta_h2:10.3f} J/mol S0      {s0_h2:10.3f} J/K/mol")
-    print (f"H2O  deltaH0 {delta_h2o:10.3f} J/mol S0     {s0_h2o:10.3f} J/K/mol")
-    print (f"O    deltaH0 {delta_o:10.3f}   J/mol S0     {s0_o:10.3f} J/K/mol")
-    print (f"CO   deltaH0 {delta_co:10.3f}  J/mol S0     {s0_co:10.3f} J/K/mol")
-    print (f"CO2  deltaH0 {delta_co2:10.3f} J/mol S0     {s0_co2:10.3f} J/K/mol")
-    print (f"CH4  deltaH0 {delta_ch4:10.3f} J/mol S0     {s0_ch4:10.3f} J/K/mol")
-    print (f"N2   deltaH0 {delta_n2:10.3f}  J/mol S0     {s0_n2:10.3f} J/K/mol")
-    print (f"NH3  deltaH0 {delta_nh3:10.3f} J/mol S0     {s0_nh3:10.3f} J/K/mol")
+        
+# def interpolation_lineaire(x, y, x0):
+#     """
+#     Interpolation linéaire pour trouver la valeur y0 correspondante à x0.
+    
+#     Args:
+#         x (list): Liste des valeurs x connues.
+#         y (list): Liste des valeurs y connues.
+#         x0 (float): Valeur x pour laquelle on veut interpoler y.
+        
+#     Returns:
+#         float: Valeur y0 interpolée.
+#     """
+#     f = interp1d(x, y, kind='linear')
+#     return f(x0)
+
         
