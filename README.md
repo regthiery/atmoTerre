@@ -4,12 +4,12 @@ Ce code permet de calculer la spéciation d'une atmosphère en équilibre avec u
 
 ## Utilisation
 
-Pour utiliser ce code, exécutez le script `main1.py` avec l'une des commandes suivantes :
+Pour utiliser ce code, exécutez le script `atmoter.py` avec l'une des commandes suivantes :
 
 ```bash
-python3 main1.py fO2
+python3 atmoter.py fO2
 
-python3 main1.py speciation
+python3 atmoter.py speciation
 
 # AtmoTerre
 
@@ -19,14 +19,24 @@ Ce code permet de calculer la spéciation d'une atmosphère en équilibre avec u
 
 Pour utiliser ce code, exécutez le script `main1.py` avec l'une des commandes suivantes :
 
-python3 main1.py fO2
-Calcule la fugacité d'oxygène du magma.
+- Pour calculer la fugacité d'oxygène du magma.
 
-python3 main1.py speciation
-Calcule la spéciation de l'atmosphère.
+```
+python3 atmoter.py fO2
+```
 
-python3 main1.py curve
-Calcule une courbe de spéciation.
+
+- Pour calculer la spéciation de l'atmosphère.
+
+```
+python3 atmoter.py speciation
+```
+
+- Pour calculer une courbe de spéciation.
+```
+python3 atmoter.py curve
+```
+
 
 ### Options
 
