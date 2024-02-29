@@ -25,7 +25,6 @@ Pour utiliser ce code, exécutez le script `main1.py` avec l'une des commandes s
 python3 atmoter.py fO2
 ```
 
-
 - Pour calculer la spéciation de l'atmosphère.
 
 ```bash
@@ -38,14 +37,13 @@ python3 atmoter.py speciation
 python3 atmoter.py curve
 ```
 
-
 ### Options
 
 Vous pouvez également spécifier les options suivantes :
 
---t: Fixe la température en Kelvin.
---p: Fixe la pression en bar.
---ho: Fixe le rapport atomique H/O.
+* --t: Fixe la température en Kelvin.
+* --p: Fixe la pression en bar.
+* --ho: Fixe le rapport atomique H/O.
 
 ## Auteur
 
