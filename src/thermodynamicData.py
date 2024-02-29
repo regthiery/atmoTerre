@@ -540,6 +540,7 @@ class ThermodynamicData:
         self.deltaG0_h2  = 1000*self.deltah_h2   - T * self.s0_h2
         self.deltaG0_h2o = 1000*self.deltah_h2o  - T * self.s0_h2o
         self.deltaG0_o   = 1000*self.deltah_o    - T * self.s0_o
+        self.deltaG0_o2  = 1000*self.deltah_o2   - T * self.s0_o2
         self.deltaG0_co  = 1000*self.deltah_co   - T * self.s0_co
         self.deltaG0_co2 = 1000*self.deltah_co2  - T * self.s0_co2
         self.deltaG0_ch4 = 1000*self.deltah_ch4  - T * self.s0_ch4
@@ -616,6 +617,7 @@ class ThermodynamicData:
         print (f"H2   deltaH0 {self.deltah_h2:10.3f} kJ/mol S0 {self.s0_h2:10.3f} J/K/mol deltaG0 {self.deltaG0_h2/1000:10.3f} kJ/mol")
         print (f"H2O  deltaH0 {self.deltah_h2o:10.3f} kJ/mol S0 {self.s0_h2o:10.3f} J/K/mol deltaG0 {self.deltaG0_h2o/1000:10.3f} kJ/mol")
         print (f"O    deltaH0 {self.deltah_o:10.3f} kJ/mol S0 {self.s0_o:10.3f} J/K/mol deltaG0 {self.deltaG0_o/1000:10.3f} kJ/mol")
+        print (f"O2   deltaH0 {self.deltah_o2:10.3f} kJ/mol S0 {self.s0_o2:10.3f} J/K/mol deltaG0 {self.deltaG0_o2/1000:10.3f} kJ/mol")
         print (f"CO   deltaH0 {self.deltah_co:10.3f} kJ/mol S0 {self.s0_co:10.3f} J/K/mol deltaG0 {self.deltaG0_co/1000:10.3f} kJ/mol")
         print (f"CO2  deltaH0 {self.deltah_co2:10.3f} kJ/mol S0 {self.s0_co2:10.3f} J/K/mol deltaG0 {self.deltaG0_co2/1000:10.3f} kJ/mol")
         print (f"CH4  deltaH0 {self.deltah_ch4:10.3f} kJ/mol S0 {self.s0_ch4:10.3f} J/K/mol deltaG0 {self.deltaG0_ch4/1000:10.3f} kJ/mol")
