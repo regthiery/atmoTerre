@@ -8,8 +8,8 @@ Pour utiliser ce code, exécutez le script `atmoter.py` avec l'une des commandes
 
 ```bash
 python3 atmoter.py fO2
+```
 
-python3 atmoter.py speciation
 
 # AtmoTerre
 
@@ -21,19 +21,20 @@ Pour utiliser ce code, exécutez le script `main1.py` avec l'une des commandes s
 
 - Pour calculer la fugacité d'oxygène du magma.
 
-```
+```bash
 python3 atmoter.py fO2
 ```
 
 
 - Pour calculer la spéciation de l'atmosphère.
 
-```
+```bash
 python3 atmoter.py speciation
 ```
 
 - Pour calculer une courbe de spéciation.
-```
+
+```bash
 python3 atmoter.py curve
 ```
 
