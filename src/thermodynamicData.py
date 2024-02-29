@@ -617,4 +617,15 @@ def interpolation_lineaire(x, y, x0):
     """
     f = interp1d(x, y, kind='linear')
     return f(x0)
+
+def printJANAFData (self, t):
+    self.calculate(t)
+    print (f"H2   deltaH0 {delta_h2:10.3f} J/mol S0      {s0_h2:10.3f} J/K/mol")
+    print (f"H2O  deltaH0 {delta_h2o:10.3f} J/mol S0     {s0_h2o:10.3f} J/K/mol")
+    print (f"O    deltaH0 {delta_o:10.3f}   J/mol S0     {s0_o:10.3f} J/K/mol")
+    print (f"CO   deltaH0 {delta_co:10.3f}  J/mol S0     {s0_co:10.3f} J/K/mol")
+    print (f"CO2  deltaH0 {delta_co2:10.3f} J/mol S0     {s0_co2:10.3f} J/K/mol")
+    print (f"CH4  deltaH0 {delta_ch4:10.3f} J/mol S0     {s0_ch4:10.3f} J/K/mol")
+    print (f"N2   deltaH0 {delta_n2:10.3f}  J/mol S0     {s0_n2:10.3f} J/K/mol")
+    print (f"NH3  deltaH0 {delta_nh3:10.3f} J/mol S0     {s0_nh3:10.3f} J/K/mol")
         

@@ -35,12 +35,18 @@ if __name__ == "__main__":
 
      atmosphere.algorithm = args.algo if args.algo is not None else 1 
      
+         #---------------------------------------------------------------
+         # Affichage des propriétés JANAF pour la substance sélectionnée
+         #---------------------------------------------------------------
+
+     if args.cmd == 'janaf':
+        data.printJANAFData (T)
 
          #---------------------------------------------------------------
          # Calcul de la fugacité d'O2 (tampon IW)
          #---------------------------------------------------------------
 
-     if args.cmd == 'fO2':
+     elif args.cmd == 'fO2':
           atmosphere.problem = 30
 
           atmosphere.calculateMolesNumber(T, P, hc, ho, hn)
