@@ -464,88 +464,113 @@ class ThermodynamicData:
     #-------------------------------------------------------------------------
     
     def interpolation_lineaire(self, x, y, x0):
-        f = sp.interpolate.interp1d(x, y, kind='linear')
-        return f(x0)
+        try:
+             f = sp.interpolate.interp1d(x, y, kind='linear')
+             fx0 = f(x0)
+        except:
+            pass     
+        return fx0
+
+    def interpolation_lineaire(self, x, y, x0):
+        try:
+             f = sp.interpolate.interp1d(x, y, kind='linear')
+             fx0 = f(x0)
+        except ValueError as e:
+             print("Erreur d'interpolation linéaire :", e)
+             fx0 = None  
+        except Exception as e:
+             print("Une erreur s'est produite lors de l'interpolation linéaire :", e)
+             raise
+        else:
+             return fx0
     
     def calculate(self,T):
 
-        self.s0_h2      = self.interpolation_lineaire (self.ttab_h2 , self.s0tab_h2      , T )
-        self.s0_n2      = self.interpolation_lineaire (self.ttab_n2 , self.s0tab_n2      , T )
-        self.s0_h2o     = self.interpolation_lineaire (self.ttab_h2o, self.s0tab_h2o     , T )
-        self.s0_nh3     = self.interpolation_lineaire (self.ttab_nh3, self.s0tab_nh3     , T )
-        self.s0_o2      = self.interpolation_lineaire (self.ttab_o2,  self.s0tab_o2      , T )
-        self.s0_ch4     = self.interpolation_lineaire (self.ttab_ch4, self.s0tab_ch4     , T )
-        self.s0_co      = self.interpolation_lineaire (self.ttab_co,  self.s0tab_co      , T )
-        self.s0_co2     = self.interpolation_lineaire (self.ttab_co2, self.s0tab_co2     , T )
-        self.s0_o       = self.interpolation_lineaire (self.ttab_o  , self.s0tab_o       , T )
+        try:
+             self.s0_h2      = self.interpolation_lineaire (self.ttab_h2 , self.s0tab_h2      , T )
+             self.s0_n2      = self.interpolation_lineaire (self.ttab_n2 , self.s0tab_n2      , T )
+             self.s0_h2o     = self.interpolation_lineaire (self.ttab_h2o, self.s0tab_h2o     , T )
+             self.s0_nh3     = self.interpolation_lineaire (self.ttab_nh3, self.s0tab_nh3     , T )
+             self.s0_o2      = self.interpolation_lineaire (self.ttab_o2,  self.s0tab_o2      , T )
+             self.s0_ch4     = self.interpolation_lineaire (self.ttab_ch4, self.s0tab_ch4     , T )
+             self.s0_co      = self.interpolation_lineaire (self.ttab_co,  self.s0tab_co      , T )
+             self.s0_co2     = self.interpolation_lineaire (self.ttab_co2, self.s0tab_co2     , T )
+             self.s0_o       = self.interpolation_lineaire (self.ttab_o  , self.s0tab_o       , T )
 
-        self.deltah_h2  = self.interpolation_lineaire (self.ttab_h2 , self.deltahftab_h2 , T )
-        self.deltah_n2  = self.interpolation_lineaire (self.ttab_n2 , self.deltahftab_n2 , T )
-        self.deltah_h2o = self.interpolation_lineaire (self.ttab_h2o, self.deltahftab_h2o, T )
-        self.deltah_nh3 = self.interpolation_lineaire (self.ttab_nh3, self.deltahftab_nh3, T )
-        self.deltah_o2  = self.interpolation_lineaire (self.ttab_o2 , self.deltahftab_o2,  T )
-        self.deltah_ch4 = self.interpolation_lineaire (self.ttab_ch4, self.deltahftab_ch4, T )
-        self.deltah_co  = self.interpolation_lineaire (self.ttab_co , self.deltahftab_co,  T )
-        self.deltah_co2 = self.interpolation_lineaire (self.ttab_co2, self.deltahftab_co2, T )
-        self.deltah_o   = self.interpolation_lineaire (self.ttab_o  , self.deltahftab_o  , T )
+             self.deltah_h2  = self.interpolation_lineaire (self.ttab_h2 , self.deltahftab_h2 , T )
+             self.deltah_n2  = self.interpolation_lineaire (self.ttab_n2 , self.deltahftab_n2 , T )
+             self.deltah_h2o = self.interpolation_lineaire (self.ttab_h2o, self.deltahftab_h2o, T )
+             self.deltah_nh3 = self.interpolation_lineaire (self.ttab_nh3, self.deltahftab_nh3, T )
+             self.deltah_o2  = self.interpolation_lineaire (self.ttab_o2 , self.deltahftab_o2,  T )
+             self.deltah_ch4 = self.interpolation_lineaire (self.ttab_ch4, self.deltahftab_ch4, T )
+             self.deltah_co  = self.interpolation_lineaire (self.ttab_co , self.deltahftab_co,  T )
+             self.deltah_co2 = self.interpolation_lineaire (self.ttab_co2, self.deltahftab_co2, T )
+             self.deltah_o   = self.interpolation_lineaire (self.ttab_o  , self.deltahftab_o  , T )
         
         
-        self.deltah2 = 0.5 * self.deltah_o2  +     self.deltah_co  -       self.deltah_co2 
-        self.deltah3 =       self.deltah_co  + 2 * self.deltah_h2o -       self.deltah_ch4 - 1.5 * self.deltah_o2
-        self.deltah4 =       self.deltah_h2o -     self.deltah_h2  - 0.5 * self.deltah_o2 
-        self.deltah5 =       self.deltah_n2  + 3 * self.deltah_h2o - 2   * self.deltah_nh3 - 1.5 * self.deltah_o2
-        self.deltah6 =   2 * self.deltah_o   -     self.deltah_o2 
-        self.deltah7 =   2 * self.deltah_nh3 -     self.deltah_n2  - 3   * self.deltah_h2 
-        self.deltah8 =       self.deltah_co  + 3 * self.deltah_h2  -       self.deltah_ch4 -       self.deltah_h2o 
-        self.deltah9 =       self.deltah_co2 +     self.deltah_h2  -       self.deltah_co  -       self.deltah_h2o 
+             self.deltah2 = 0.5 * self.deltah_o2  +     self.deltah_co  -       self.deltah_co2 
+             self.deltah3 =       self.deltah_co  + 2 * self.deltah_h2o -       self.deltah_ch4 - 1.5 * self.deltah_o2
+             self.deltah4 =       self.deltah_h2o -     self.deltah_h2  - 0.5 * self.deltah_o2 
+             self.deltah5 =       self.deltah_n2  + 3 * self.deltah_h2o - 2   * self.deltah_nh3 - 1.5 * self.deltah_o2
+             self.deltah6 =   2 * self.deltah_o   -     self.deltah_o2 
+             self.deltah7 =   2 * self.deltah_nh3 -     self.deltah_n2  - 3   * self.deltah_h2 
+             self.deltah8 =       self.deltah_co  + 3 * self.deltah_h2  -       self.deltah_ch4 -       self.deltah_h2o 
+             self.deltah9 =       self.deltah_co2 +     self.deltah_h2  -       self.deltah_co  -       self.deltah_h2o 
 
-        self.deltah2 *= 1e3
-        self.deltah3 *= 1e3
-        self.deltah4 *= 1e3
-        self.deltah5 *= 1e3
-        self.deltah6 *= 1e3
-        self.deltah7 *= 1e3
-        self.deltah8 *= 1e3
-        self.deltah9 *= 1e3
+             self.deltah2 *= 1e3
+             self.deltah3 *= 1e3
+             self.deltah4 *= 1e3
+             self.deltah5 *= 1e3
+             self.deltah6 *= 1e3
+             self.deltah7 *= 1e3
+             self.deltah8 *= 1e3
+             self.deltah9 *= 1e3
 
-        self.deltas2 = 0.5 * self.s0_o2  +     self.s0_co  -       self.s0_co2 
-        self.deltas3 =       self.s0_co  + 2 * self.s0_h2o -       self.s0_ch4 - 1.5 * self.s0_o2
-        self.deltas4 =       self.s0_h2o -     self.s0_h2  - 0.5 * self.s0_o2 
-        self.deltas5 =       self.s0_n2  + 3 * self.s0_h2o - 2   * self.s0_nh3 - 1.5 * self.s0_o2
-        self.deltas6 =   2 * self.s0_o   -     self.s0_o2 
-        self.deltas7 =   2 * self.s0_nh3 -     self.s0_n2  - 3   * self.s0_h2 
-        self.deltas8 =       self.s0_co  + 3 * self.s0_h2  -       self.s0_ch4 -       self.s0_h2o 
-        self.deltas9 =       self.s0_co2 +     self.s0_h2  -       self.s0_co  -       self.s0_h2o 
+             self.deltas2 = 0.5 * self.s0_o2  +     self.s0_co  -       self.s0_co2 
+             self.deltas3 =       self.s0_co  + 2 * self.s0_h2o -       self.s0_ch4 - 1.5 * self.s0_o2
+             self.deltas4 =       self.s0_h2o -     self.s0_h2  - 0.5 * self.s0_o2 
+             self.deltas5 =       self.s0_n2  + 3 * self.s0_h2o - 2   * self.s0_nh3 - 1.5 * self.s0_o2
+             self.deltas6 =   2 * self.s0_o   -     self.s0_o2 
+             self.deltas7 =   2 * self.s0_nh3 -     self.s0_n2  - 3   * self.s0_h2 
+             self.deltas8 =       self.s0_co  + 3 * self.s0_h2  -       self.s0_ch4 -       self.s0_h2o 
+             self.deltas9 =       self.s0_co2 +     self.s0_h2  -       self.s0_co  -       self.s0_h2o 
 
-        self.K0 = np.exp(-self.deltah0 / (self.R * T) + self.deltas0 / self.R  )
-        self.K2 = np.exp(-self.deltah2 / (self.R * T) + self.deltas2 / self.R  )
-        self.K3 = np.exp(-self.deltah3 / (self.R * T) + self.deltas3 / self.R  )
-        self.K4 = np.exp(-self.deltah4 / (self.R * T) + self.deltas4 / self.R  )
-        self.K5 = np.exp(-self.deltah5 / (self.R * T) + self.deltas5 / self.R  )
-        self.K6 = np.exp(-self.deltah6 / (self.R * T) + self.deltas6 / self.R  )
-        self.K7 = np.exp(-self.deltah7 / (self.R * T) + self.deltas7 / self.R  )
-        self.K8 = np.exp(-self.deltah8 / (self.R * T) + self.deltas8 / self.R  )
-        self.K9 = np.exp(-self.deltah9 / (self.R * T) + self.deltas9 / self.R  )
+             self.K0 = np.exp(-self.deltah0 / (self.R * T) + self.deltas0 / self.R  )
+             self.K2 = np.exp(-self.deltah2 / (self.R * T) + self.deltas2 / self.R  )
+             self.K3 = np.exp(-self.deltah3 / (self.R * T) + self.deltas3 / self.R  )
+             self.K4 = np.exp(-self.deltah4 / (self.R * T) + self.deltas4 / self.R  )
+             self.K5 = np.exp(-self.deltah5 / (self.R * T) + self.deltas5 / self.R  )
+             self.K6 = np.exp(-self.deltah6 / (self.R * T) + self.deltas6 / self.R  )
+             self.K7 = np.exp(-self.deltah7 / (self.R * T) + self.deltas7 / self.R  )
+             self.K8 = np.exp(-self.deltah8 / (self.R * T) + self.deltas8 / self.R  )
+             self.K9 = np.exp(-self.deltah9 / (self.R * T) + self.deltas9 / self.R  )
         
-        self.deltaG0_0 = self.deltah0 - T * self.deltas0
-        self.deltaG0_2 = self.deltah2 - T * self.deltas2
-        self.deltaG0_3 = self.deltah3 - T * self.deltas3
-        self.deltaG0_4 = self.deltah4 - T * self.deltas4
-        self.deltaG0_5 = self.deltah5 - T * self.deltas5
-        self.deltaG0_6 = self.deltah6 - T * self.deltas6
-        self.deltaG0_7 = self.deltah7 - T * self.deltas7
-        self.deltaG0_8 = self.deltah8 - T * self.deltas8
-        self.deltaG0_9 = self.deltah9 - T * self.deltas9
+             self.deltaG0_0 = self.deltah0 - T * self.deltas0
+             self.deltaG0_2 = self.deltah2 - T * self.deltas2
+             self.deltaG0_3 = self.deltah3 - T * self.deltas3
+             self.deltaG0_4 = self.deltah4 - T * self.deltas4
+             self.deltaG0_5 = self.deltah5 - T * self.deltas5
+             self.deltaG0_6 = self.deltah6 - T * self.deltas6
+             self.deltaG0_7 = self.deltah7 - T * self.deltas7
+             self.deltaG0_8 = self.deltah8 - T * self.deltas8
+             self.deltaG0_9 = self.deltah9 - T * self.deltas9
 
-        self.deltaG0_h2  = 1000*self.deltah_h2   - T * self.s0_h2
-        self.deltaG0_h2o = 1000*self.deltah_h2o  - T * self.s0_h2o
-        self.deltaG0_o   = 1000*self.deltah_o    - T * self.s0_o
-        self.deltaG0_o2  = 1000*self.deltah_o2   - T * self.s0_o2
-        self.deltaG0_co  = 1000*self.deltah_co   - T * self.s0_co
-        self.deltaG0_co2 = 1000*self.deltah_co2  - T * self.s0_co2
-        self.deltaG0_ch4 = 1000*self.deltah_ch4  - T * self.s0_ch4
-        self.deltaG0_n2  = 1000*self.deltah_n2   - T * self.s0_n2
-        self.deltaG0_nh3 = 1000*self.deltah_nh3  - T * self.s0_nh3
+             self.deltaG0_h2  = 1000*self.deltah_h2   - T * self.s0_h2
+             self.deltaG0_h2o = 1000*self.deltah_h2o  - T * self.s0_h2o
+             self.deltaG0_o   = 1000*self.deltah_o    - T * self.s0_o
+             self.deltaG0_o2  = 1000*self.deltah_o2   - T * self.s0_o2
+             self.deltaG0_co  = 1000*self.deltah_co   - T * self.s0_co
+             self.deltaG0_co2 = 1000*self.deltah_co2  - T * self.s0_co2
+             self.deltaG0_ch4 = 1000*self.deltah_ch4  - T * self.s0_ch4
+             self.deltaG0_n2  = 1000*self.deltah_n2   - T * self.s0_n2
+             self.deltaG0_nh3 = 1000*self.deltah_nh3  - T * self.s0_nh3
+        except ValueError as e:
+             print("Erreur de calcul :", e)
+        except Exception as e:
+             print("Une erreur s'est produite lors des calculs des valeurs thermodynamiques issues des tables JANAF :\n", e)
+             raise
+        else:
+            pass    
       
         
     def print(self):
@@ -625,19 +650,5 @@ class ThermodynamicData:
         print (f"NH3  deltaH0 {self.deltah_nh3:10.3f} kJ/mol S0 {self.s0_nh3:10.3f} J/K/mol deltaG0 {self.deltaG0_nh3/1000:10.3f} kJ/mol")
 
         
-# def interpolation_lineaire(x, y, x0):
-#     """
-#     Interpolation linéaire pour trouver la valeur y0 correspondante à x0.
-    
-#     Args:
-#         x (list): Liste des valeurs x connues.
-#         y (list): Liste des valeurs y connues.
-#         x0 (float): Valeur x pour laquelle on veut interpoler y.
-        
-#     Returns:
-#         float: Valeur y0 interpolée.
-#     """
-#     f = interp1d(x, y, kind='linear')
-#     return f(x0)
 
         

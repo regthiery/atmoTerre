@@ -6,6 +6,12 @@ Ce code permet de calculer la spéciation d'une atmosphère en équilibre avec u
 
 Pour utiliser ce code, exécutez le script `atmoter.py` avec l'une des commandes suivantes :
 
+- Pour imprimer les données des tables JANAF à une température donnée
+
+```bash
+python3 atmoter.py --t 298.15
+```
+
 - Pour calculer la fugacité d'oxygène du magma.
 
 ```bash
