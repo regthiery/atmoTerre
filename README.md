@@ -18,6 +18,12 @@ python3 atmoter.py --t 298.15
 python3 atmoter.py fO2
 ```
 
+- Pour calculer les paramètres thermodynamiques de la réaction de vaporeformage du CH4 en présence de vapeur d'eau
+
+```bash
+reaction --ch4 -1 --h2o -1 --h2 2 --co 1 --t 298.15
+```
+
 - Pour calculer la spéciation de l'atmosphère.
 
 ```bash

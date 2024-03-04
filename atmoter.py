@@ -62,6 +62,7 @@ if __name__ == "__main__":
          print ("Reaction")
          print (species)
          data.printReaction(species)
+         data.calculateParametersForReaction(species,T)
 
          #---------------------------------------------------------------
          # Calcul de la fugacité d'O2 (tampon IW)

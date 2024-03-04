@@ -11,7 +11,7 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": "janaf --t 298.15"
+            "args": "reaction --ch4 -1 --h2o -1 --h2 2 --co 1"
         }
     ]
 }

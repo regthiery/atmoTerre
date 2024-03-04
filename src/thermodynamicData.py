@@ -462,7 +462,25 @@ class ThermodynamicData:
     
     
     #-------------------------------------------------------------------------
-    
+
+#--------------------------------------------------------
+    def __init__(self):
+#--------------------------------------------------------
+
+     
+     self.data = {
+    'h2' : { 't': self.ttab_h2  , 's0' :  self.s0tab_h2  , 'deltahf' : self.deltahftab_h2  },
+    'n2' : { 't': self.ttab_n2  , 's0' :  self.s0tab_n2  , 'deltahf' : self.deltahftab_n2  },
+    'h2o': { 't': self.ttab_h2o , 's0' :  self.s0tab_h2o , 'deltahf' : self.deltahftab_h2o },
+    'nh3': { 't': self.ttab_nh3 , 's0' :  self.s0tab_nh3 , 'deltahf' : self.deltahftab_nh3 },
+    'o2' : { 't': self.ttab_o2  , 's0' :  self.s0tab_o2  , 'deltahf' : self.deltahftab_o2  },
+    'ch4': { 't': self.ttab_ch4 , 's0' :  self.s0tab_ch4 , 'deltahf' : self.deltahftab_ch4 },
+    'co' : { 't': self.ttab_co  , 's0' :  self.s0tab_co  , 'deltahf' : self.deltahftab_co  },
+    'co2': { 't': self.ttab_co2 , 's0' :  self.s0tab_co2 , 'deltahf' : self.deltahftab_co2 },
+    'o'  : { 't': self.ttab_o   , 's0' :  self.s0tab_o   , 'deltahf' : self.deltahftab_o   }
+     }
+
+
     def interpolation_lineaire(self, x, y, x0):
         try:
              f = sp.interpolate.interp1d(x, y, kind='linear')
@@ -672,6 +690,30 @@ class ThermodynamicData:
         reaction = reaction[:-3]
 
         print(reaction)
+
+    def calculateParametersForReaction (self,species,T):
+        deltaG0 = 0
+        deltaH0 = 0
+        deltaS0 = 0
+
+        for key, value in species.items():
+            s0 = self.interpolation_lineaire (self.data[key]['t'] , self.data[key]['s0'], T )
+            h0 = self.interpolation_lineaire (self.data[key]['t'] , self.data[key]['deltahf'], T )
+            h0 *= 1000
+            g0 = h0 - T * s0
+            deltaH0 += h0 * value
+            deltaS0 += s0 * value
+            deltaG0 += h0 * value - T
+            print (f"{key:5s}", f"h0 {h0:12.3f}", f"s0 {s0:8.3f} ", f"g0 {g0:12.3f} ")
+
+        T0 = deltaG0 / deltaS0
+
+        print()
+
+        print(f"deltaH0 : {deltaH0/1000:10.3f} kJ")
+        print(f"deltaS0 : {deltaS0:10.3f}")
+        print(f"deltaG0 : {deltaG0/1000:10.3f} kJ")
+        print(f"T0      : {T0:10.3f} K")
 
 
         
