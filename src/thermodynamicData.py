@@ -649,6 +649,31 @@ class ThermodynamicData:
         print (f"N2   deltaH0 {self.deltah_n2:10.3f} kJ/mol S0 {self.s0_n2:10.3f} J/K/mol deltaG0 {self.deltaG0_n2/1000:10.3f} kJ/mol")
         print (f"NH3  deltaH0 {self.deltah_nh3:10.3f} kJ/mol S0 {self.s0_nh3:10.3f} J/K/mol deltaG0 {self.deltaG0_nh3/1000:10.3f} kJ/mol")
 
+
+    def printReaction (self, species):
+
+        reaction = ""
+        for key, value in species.items():
+            if value < 0:
+                if value == -1:
+                    reaction += f"{key} + "
+                else:
+                    reaction += f"{-value} {key} + "
+
+        reaction = reaction[:-3] + " -> "
+
+        for key, value in species.items():
+            if value > 0:
+                if value == 1:
+                    reaction += f"{key} + "
+                else:
+                    reaction += f"{value} {key} + "
+
+        reaction = reaction[:-3]
+
+        print(reaction)
+
+
         
 
         

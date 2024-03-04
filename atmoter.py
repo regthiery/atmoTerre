@@ -17,6 +17,15 @@ if __name__ == "__main__":
      parser.add_argument('--t'   , type=float, help='Valeur de la température T en Kelvin')
      parser.add_argument('--p'   , type=float, help='Valeur de la pression P en bar')
      parser.add_argument('--algo', type=int, choices=[1, 2], help='Algorithme (1 ou 2)')
+     parser.add_argument('--ch4'  , type=int, help='Coefficient stoechiométrique du CH4 dans la réaction')
+     parser.add_argument('--co2'  , type=int, help='Coefficient stoechiométrique du CO2 dans la réaction')
+     parser.add_argument('--co'   , type=int, help='Coefficient stoechiométrique du CO dans la réaction')
+     parser.add_argument('--h2o'  , type=int, help='Coefficient stoechiométrique du H2O dans la réaction')
+     parser.add_argument('--h2'   , type=int, help='Coefficient stoechiométrique du H2 dans la réaction')
+     parser.add_argument('--o2'   , type=int, help='Coefficient stoechiométrique du O2 dans la réaction')
+     parser.add_argument('--nh3'  , type=int, help='Coefficient stoechiométrique du NH3 dans la réaction')
+     parser.add_argument('--n2'   , type=int, help='Coefficient stoechiométrique du N2 dans la réaction')
+     parser.add_argument('--o'    , type=int, help='Coefficient stoechiométrique du O dans la réaction')
      
      args = parser.parse_args()
      
@@ -41,6 +50,18 @@ if __name__ == "__main__":
 
      if args.cmd == 'janaf':
         data.printJANAFData (T)
+
+         #---------------------------------------------------------------
+         # Calcul des paramètres thermodynamiques d'une réaction
+         #---------------------------------------------------------------
+
+     elif args.cmd == 'reaction':
+         
+         species = {k: getattr(args, k) for k in ['ch4', 'co2', 'co', 'h2o', 'h2', 'o2', 'nh3', 'n2', 'o'] if getattr(args, k) is not None}
+
+         print ("Reaction")
+         print (species)
+         data.printReaction(species)
 
          #---------------------------------------------------------------
          # Calcul de la fugacité d'O2 (tampon IW)
