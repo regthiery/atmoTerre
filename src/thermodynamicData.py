@@ -698,6 +698,8 @@ class ThermodynamicData:
         deltaH0 = 0
         deltaS0 = 0
 
+        ngas = 0
+
         for key, value in species.items():
             s0 = self.interpolation_lineaire (self.data[key]['t'] , self.data[key]['s0'], T )
             h0 = self.interpolation_lineaire (self.data[key]['t'] , self.data[key]['deltahf'], T )
@@ -707,6 +709,7 @@ class ThermodynamicData:
             deltaS0 += s0 * value
             deltaG0 += h0 * value - T
             print (f"{key:5s}", f"h0 {h0/1000:10.3f} kJ/mol", f"   s0 {s0:8.3f} J/K/mol", f"   g0 {g0/1000:10.3f} kJ/mol")
+            ngas = ngas + value
 
         T0 = deltaG0 / deltaS0
         logK = -deltaG0/8.31/T
@@ -719,7 +722,7 @@ class ThermodynamicData:
         print(f"deltaG0 : {deltaG0/1000:10.3f} kJ")
         print(f"T0      : {T0:10.3f} K")
         print(f"logK    : {logK:10.3g}")
-        print(f"K       : {K:10.3g} bar")
+        print(f"K       : {K:10.3g} bar^{ngas:4.2f}")
 
 
         
