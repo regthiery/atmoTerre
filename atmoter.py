@@ -60,7 +60,6 @@ if __name__ == "__main__":
          species = {k: getattr(args, k) for k in ['ch4', 'co2', 'co', 'h2o', 'h2', 'o2', 'nh3', 'n2', 'o'] if getattr(args, k) is not None}
 
          print ("Reaction")
-         print (species)
          data.printReaction(species)
          data.calculateParametersForReaction(species,T)
 
@@ -112,3 +111,4 @@ if __name__ == "__main__":
               atmosphere.calculateSpeciation(None)
               atmosphere.calculateSpeciationCurve(1e-9, 40, None)
 
+     print()

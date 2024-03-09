@@ -689,7 +689,9 @@ class ThermodynamicData:
 
         reaction = reaction[:-3]
 
+        print()
         print(reaction)
+        print()
 
     def calculateParametersForReaction (self,species,T):
         deltaG0 = 0
@@ -704,9 +706,11 @@ class ThermodynamicData:
             deltaH0 += h0 * value
             deltaS0 += s0 * value
             deltaG0 += h0 * value - T
-            print (f"{key:5s}", f"h0 {h0:12.3f}", f"s0 {s0:8.3f} ", f"g0 {g0:12.3f} ")
+            print (f"{key:5s}", f"h0 {h0/1000:10.3f} kJ/mol", f"   s0 {s0:8.3f} J/K/mol", f"   g0 {g0/1000:10.3f} kJ/mol")
 
         T0 = deltaG0 / deltaS0
+        logK = -deltaG0/8.31/T
+        K = np.exp(logK)
 
         print()
 
@@ -714,6 +718,8 @@ class ThermodynamicData:
         print(f"deltaS0 : {deltaS0:10.3f}")
         print(f"deltaG0 : {deltaG0/1000:10.3f} kJ")
         print(f"T0      : {T0:10.3f} K")
+        print(f"logK    : {logK:10.3g}")
+        print(f"K       : {K:10.3g} bar")
 
 
         
